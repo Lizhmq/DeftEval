@@ -1,0 +1,3 @@
+*/*.log
+*/save
+*/__pycache__
