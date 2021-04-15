@@ -10,10 +10,6 @@ GRAD_ACC=1
 EPOCH=10
 BLOCKSIZE=384
 
-
-# 4e-5
-# 1e-4 too big
-# varmis 2 * 4 * 8, 2epoch
 # -m torch.distributed.launch --nproc_per_node=$PER_NODE_GPU
 python  train.py \
         --data_dir=$DATADIR \

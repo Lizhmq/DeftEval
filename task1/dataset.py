@@ -39,7 +39,8 @@ class ClassifierDataset(Dataset):
                 datafile = os.path.join(args.data_dir, "train.pkl")
                 datafile2 = os.path.join(args.data_dir, "dev.pkl")
             else:
-                datafile = os.path.join(args.data_dir, "test.pkl")
+                # datafile = os.path.join(args.data_dir, "test.pkl")
+                datafile = os.path.join(args.data_dir, "dev.pkl")
             if file_type == 'train':
                 logger.warning(
                     "Creating features from dataset file at %s", datafile)

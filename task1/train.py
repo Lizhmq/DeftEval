@@ -19,6 +19,7 @@ import torch
 from torch.utils.data import DataLoader, Dataset, SequentialSampler, RandomSampler, TensorDataset
 from torch.utils.data.distributed import DistributedSampler
 from dataset import ClassifierDataset
+from sklearn.metrics import classification_report
 
 
 from torch.utils.tensorboard import SummaryWriter
@@ -253,7 +254,6 @@ def train(args, train_dataset, model, tokenizer, fh, pool):
 
 
 def evaluate(args, model, tokenizer, prefix="", eval_when_training=False):
-    # Loop to handle MNLI double evaluation (matched, mis-matched)
     eval_output_dir = args.output_dir
 
     eval_dataset = load_and_cache_examples(args, tokenizer, evaluate=True)
@@ -277,6 +277,8 @@ def evaluate(args, model, tokenizer, prefix="", eval_when_training=False):
     #logger.info("  Num examples = %d", len(eval_dataset))
     #logger.info("  Batch size = %d", args.eval_batch_size)
     correct = 0.0
+    correct_y = []
+    predict_y = []
     num_sample = 0
     model.eval()
 
@@ -294,9 +296,13 @@ def evaluate(args, model, tokenizer, prefix="", eval_when_training=False):
             logits = outputs[0]
             preds = torch.argmax(logits, dim=-1)
             correct += preds.eq(labels).sum()
+            correct_y.extend(labels)
+            predict_y.extend(preds)
+
         num_sample += labels.size()[0]
 
-    acc = correct/num_sample
+
+    acc = correct / num_sample
 
     result = {
         "accuracy": float(acc)
@@ -309,6 +315,9 @@ def evaluate(args, model, tokenizer, prefix="", eval_when_training=False):
         for key in sorted(result.keys()):
             #logger.info("  %s = %s", key, str(result[key]))
             writer.write("%s = %s\n" % (key, str(result[key])))
+    target_names = ["class_0", "class_1"]
+    print(classification_report(correct_y, predict_y, target_names=target_names))
+
 
     return result
 
