@@ -1,10 +1,10 @@
-### SemEval Task6 - DeftEval
+## SemEval Task6 - DeftEval
 
 [SemEval-2020](https://www.aclweb.org/portal/content/semeval-2020-international-workshop-semantic-evaluation) is an International Workshop on Semantic Evaluation hold by ACL.
 
 In this repository, we focus on the SemEval Task6 -- [DeftEval](https://competitions.codalab.org/competitions/20900): Extracting term-definition pairs in free text.
 
-#### Overview
+### Overview
 
 DeftEval is split into three subtasks:
 
@@ -22,7 +22,7 @@ Given the tag sequence labels, label the relations between each tag according to
 
 Please refer to the offered link for more information.
 
-#### Subtask-1: Sentence Classification
+### Subtask-1: Sentence Classification
 
 As mentioned above, this subtask is a sentence binary classification problem.
 
