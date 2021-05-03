@@ -62,7 +62,7 @@ def train(args, train_dataset, model, tokenizer, fh, pool):
     args.batch_size = args.per_gpu_train_batch_size * max(1, args.n_gpu)
     train_sampler = RandomSampler(train_dataset)
     train_dataloader = DataLoader(
-        train_dataset, sampler=train_sampler, batch_size=args.batch_size, drop_last=True)
+        train_dataset, sampler=train_sampler, batch_size=args.batch_size, drop_last=False)
     total_examples = len(train_dataset) * (
         torch.distributed.get_world_size() if args.local_rank != -1 else 1)
     batch_size = args.batch_size * args.gradient_accumulation_steps * (

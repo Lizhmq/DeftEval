@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 def load_and_cache_examples(args, tokenizer, evaluate=False):
     dataset = ClassifierDataset(
-        tokenizer, args, logger, file_type='dev' if evaluate else 'train', block_size=args.block_size)
+        tokenizer, args, logger, file_type='test' if evaluate else 'train', block_size=args.block_size)
     return dataset
 
 
@@ -21,7 +21,7 @@ def evaluate(args, model, tokenizer):
     eval_dataset = load_and_cache_examples(args, tokenizer, evaluate=True)
     eval_sampler = SequentialSampler(eval_dataset)
     eval_dataloader = DataLoader(
-        eval_dataset, sampler=eval_sampler, batch_size=args.eval_batch_size, drop_last=True)
+        eval_dataset, sampler=eval_sampler, batch_size=args.eval_batch_size, drop_last=False)
 
     # Eval!
     #logger.info("***** Running evaluation {} *****".format(prefix))
