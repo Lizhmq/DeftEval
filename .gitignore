@@ -1,3 +1,6 @@
 */*.log
+*/*.txt
 */save
+*/save-0.1
+*/save-1
 */__pycache__
