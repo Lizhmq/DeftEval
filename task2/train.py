@@ -421,19 +421,20 @@ def main():
         logger.info("reload model from {}, resume from {} steps".format(
             checkpoint_last, args.start_step))
 
-    # Load pre-trained model
-    label_list = ["O", "B-Term", "I-Term", "B-Definition", \
-                "I-Definition", "B-Alias-Term", "I-Alias-Term", \
-                "B-Referential-Definition", "I-Referential-Definition", \
-                "B-Referential-Term", "I-Referential-Term", "B-Qualifier", "I-Qualifier"]
-    label_map = dict()
-    for i, lab in enumerate(label_list):
-        label_map[lab] = i
+    
+    # label_list = ["O", "B-Term", "I-Term", "B-Definition", \
+                # "I-Definition", "B-Alias-Term", "I-Alias-Term", \
+                # "B-Referential-Definition", "I-Referential-Definition", \
+                # "B-Referential-Term", "I-Referential-Term", "B-Qualifier", "I-Qualifier"]
+    # label_map = dict()
+    # for i, lab in enumerate(label_list):
+    #     label_map[lab] = i
 
+    # Load pre-trained model
     tokenizer = RobertaTokenizer.from_pretrained(args.pretrain_dir)
-    train_dataset = JointDataset(tokenizer, args, logger, file_name="all_train.pkl", label_map=label_map, block_size=512)
-    valid_dataset = JointDataset(tokenizer, args, logger, file_name="all_dev.pkl", label_map=label_map, block_size=512)
-    test_dataset = JointDataset(tokenizer, args, logger, file_name="test2.pkl", label_map=label_map, block_size=512)
+    train_dataset = JointDataset(tokenizer, args, logger, file_name="all_train.pkl", block_size=512)
+    valid_dataset = JointDataset(tokenizer, args, logger, file_name="all_dev.pkl", label_map=train_dataset.label_map, block_size=512)
+    test_dataset = JointDataset(tokenizer, args, logger, file_name="test2.pkl", label_map=train_dataset.label_map, block_size=512)
 
     model = build_model(args, len(train_dataset.label_map))
     model.tasks = "2"
@@ -453,7 +454,7 @@ def main():
     # Training
     if args.do_train:
         global_step, tr_loss = train(
-            args, train_dataset, valid_dataset, model, tokenizer, fh, pool)
+            args, train_dataset, test_dataset, model, tokenizer, fh, pool)
         logger.info(" global_step = %s, average loss = %s",
                     global_step, tr_loss)
 

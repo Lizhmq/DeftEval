@@ -9,7 +9,7 @@ def out(strs, path):
 
 def main():
     path1 = "../../deft_corpus/data/deft_files/test2.pkl"
-    path2 = "./test-2000.txt"
+    path2 = "./test-aug-3500.txt"
     output_1 = "../input/ref/task_2.deft"
     output_2 = "../input/res/task_2.deft"
 
@@ -21,6 +21,16 @@ def main():
     ls = [list(st.split(" ")) for st in ls]
     assert len(ls) == len(bios)
 
+
+    label_list = ["O", "B-Term", "I-Term", "B-Definition", \
+                "I-Definition", "B-Alias-Term", "I-Alias-Term", \
+                "B-Referential-Definition", "I-Referential-Definition", \
+                "B-Referential-Term", "I-Referential-Term", "B-Qualifier", "I-Qualifier"]
+    def m(tok):
+        if tok in label_list:
+            return tok
+        return "O"
+
     ref_lines, res_lines = [], []
     for i, (x, ref, res) in enumerate(zip(xs, bios, ls)):
         x = x.replace("\n", "")
@@ -29,6 +39,7 @@ def main():
         if len(ref) > len(res):
             print(len(ref) - len(res))
         for j in range(len(res)):
+            res[j] = m(res[j])
             ref_lines.append("\t".join([x[j], "path", "0", "0", ref[j]]) + "\n")
             res_lines.append("\t".join([x[j], "path", "0", "0", res[j]]) + "\n")
         for j in range(len(res), len(ref)):

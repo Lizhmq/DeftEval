@@ -1,6 +1,4 @@
 */*.log
 */*.txt
-*/save
-*/save-0.1
-*/save-1
+*/save*
 */__pycache__

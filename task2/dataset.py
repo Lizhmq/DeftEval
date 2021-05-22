@@ -67,7 +67,7 @@ class ClassifierDataset(Dataset):
 
 
 class JointDataset(Dataset):        # jointly training classification and sequence labeling
-    def __init__(self, tokenizer, args, logger, file_name, label_map=None, block_size=512):
+    def __init__(self, tokenizer, args, logger, file_name, label_map=None, block_size=512, aug=False):
         if args.local_rank == -1:
             local_rank = 0
             world_size = 1
@@ -114,6 +114,11 @@ class JointDataset(Dataset):        # jointly training classification and sequen
                 self.label_map = {label : i for i, label in enumerate(label_list, 0)}
             else:
                 self.label_map = label_map
+
+            brdid = self.label_map["B-Referential-Definition"]
+            bqid = self.label_map["B-Qualifier"]
+            brtid = self.label_map["B-Referential-Term"]
+
             for exidx, (x, y, bio) in enumerate(zip(xs, ys, bios)):
                 if exidx % world_size == local_rank:
 
@@ -151,11 +156,20 @@ class JointDataset(Dataset):        # jointly training classification and sequen
                     assert len(input_mask) == block_size
                     assert len(label_ids) == block_size
                     assert len(label_mask) == block_size
-                    self.xs.append(input_ids)
-                    self.x_mask.append(input_mask)
-                    self.ys.append(y)
-                    self.bios.append(label_ids)
-                    self.bio_mask.append(label_mask)
+                    dup = 1
+                    if file_name != "test2.pkl":
+                        if brtid in label_ids:
+                            dup = 5
+                        elif bqid in label_ids:
+                            dup = 3
+                        if brdid in label_ids:
+                            dup = 2
+                    for _ in range(dup):
+                        self.xs.append(input_ids)
+                        self.x_mask.append(input_mask)
+                        self.ys.append(y)
+                        self.bios.append(label_ids)
+                        self.bio_mask.append(label_mask)
                     if exidx / world_size < 5:
                         logger.info("*** Example ***")
                         logger.info("tokens: %s" % " ".join(

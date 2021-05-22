@@ -17,7 +17,7 @@ from torch import nn
 from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,
                               TensorDataset)
 from torch.utils.data.distributed import DistributedSampler
-from tqdm import tqdm, trange
+from tqdm import tqdm
 from sklearn.metrics import classification_report
 from torch.utils.tensorboard import SummaryWriter
 from dataset import ClassifierDataset, JointDataset
@@ -49,6 +49,8 @@ def gen_2(args, model, tokenizer, eval_dataset):
 
         with torch.no_grad():
             pred = model.forward2(x, y, x_mask, bio_mask).cpu().numpy()
+            if len(pred.shape) > 1:
+                pred = pred.flatten()
             nums = torch.sum(bio_mask, dim=1)
             batch_pred = []
             start = 0
@@ -66,7 +68,7 @@ def inv_map(preds, dic, output_file):
     labels = []
     for pred in preds:
         labels.append([inv_dic[v] for v in pred])
-    with open(output_file, "a") as f:
+    with open(output_file, "w") as f:
         f.writelines([" ".join(line) + "\n" for line in labels])
     return labels
 
@@ -179,32 +181,46 @@ def main():
     args = parser.parse_args()
     args.local_rank = -1
     args.device = torch.device("cuda", 0)
+    # args.device = torch.device("cpu")
 
-    label_list = ["O", "B-Term", "I-Term", "B-Definition", \
-                "I-Definition", "B-Alias-Term", "I-Alias-Term", \
-                "B-Referential-Definition", "I-Referential-Definition", \
-                "B-Referential-Term", "I-Referential-Term", "B-Qualifier", "I-Qualifier"]
-    label_map = dict()
-    for i, lab in enumerate(label_list):
-        label_map[lab] = i
+    # label_list = ["O", "B-Term", "I-Term", "B-Definition", \
+                # "I-Definition", "B-Alias-Term", "I-Alias-Term", \
+                # "B-Referential-Definition", "I-Referential-Definition", \
+                # "B-Referential-Term", "I-Referential-Term", "B-Qualifier", "I-Qualifier"]
+    # label_map = dict()
+    # for i, lab in enumerate(label_list):
+    #     label_map[lab] = i
     
-    tokenizer = RobertaTokenizer.from_pretrained(args.pretrain_dir)
-    train_dataset = JointDataset(tokenizer, args, logger, file_name="all_train.pkl", label_map=label_map, block_size=512)
-    valid_dataset = JointDataset(tokenizer, args, logger, file_name="all_dev.pkl", label_map=label_map, block_size=512)
-    test_dataset = JointDataset(tokenizer, args, logger, file_name="test2.pkl", label_map=label_map, block_size=512)
-    # test_dataset = ClassifierDataset(tokenizer, args, logger, file_name="test1.pkl", block_size=512)
-    bio_size = len(train_dataset.label_map)
-    model = build_model(args, bio_size, args.pretrain_dir)
-    model.tasks = "2"
-    # results = valid_loss(args, model, tokenizer, eval_dataset=valid_dataset, eval_when_training=True)
-    # print(results)
-    # evaluate_1(args, model, tokenizer, eval_dataset=test_dataset)
-    dic = train_dataset.label_map
-    
-    preds = gen_2(args, model, tokenizer, test_dataset)
-    # results = valid_loss(args, model, tokenizer, eval_dataset=test_dataset, eval_when_training=True)
-    # print(results)
-    inv_map(preds, dic, "test-2000.txt")
+    model_list = ["./save-aug1/checkpoint-500-0.4666", \
+                    "./save-aug1/checkpoint-1000-0.5296", \
+                    "./save-aug1/checkpoint-1500-0.5034", \
+                    "./save-aug1/checkpoint-2000-0.5739", \
+                    "./save-aug1/checkpoint-2500-0.5226", \
+                    "./save-aug1/checkpoint-3000-0.6575", \
+                    "./save-aug1/checkpoint-3500-0.5438", \
+                    "./save-aug1/checkpoint-4000-0.6795", \
+                    "./save-aug1/checkpoint-4500-0.7522"]
+    out_list = ["test-aug-500.txt", "test-aug-1000.txt", "test-aug-1500.txt", "test-aug-2000.txt", \
+                "test-aug-2500.txt", "test-aug-3000.txt", "test-aug-3500.txt", "test-aug-4000.txt", "test-aug-4500.txt"]
+    for _, (model_path, out_path) in enumerate(zip(model_list, out_list)):
+        args.pretrain_dir = model_path
+        tokenizer = RobertaTokenizer.from_pretrained(args.pretrain_dir)
+        train_dataset = JointDataset(tokenizer, args, logger, file_name="all_train.pkl", block_size=512)
+        valid_dataset = JointDataset(tokenizer, args, logger, file_name="all_dev.pkl", label_map=train_dataset.label_map, block_size=512)
+        test_dataset = JointDataset(tokenizer, args, logger, file_name="test2.pkl", label_map=train_dataset.label_map, block_size=512)
+        # test_dataset = ClassifierDataset(tokenizer, args, logger, file_name="test1.pkl", block_size=512)
+        bio_size = len(train_dataset.label_map)
+        model = build_model(args, bio_size, args.pretrain_dir)
+        model.tasks = "2"
+        # results = valid_loss(args, model, tokenizer, eval_dataset=valid_dataset, eval_when_training=True)
+        # print(results)
+        # evaluate_1(args, model, tokenizer, eval_dataset=test_dataset)
+        dic = train_dataset.label_map
+        
+        preds = gen_2(args, model, tokenizer, test_dataset)
+        # results = valid_loss(args, model, tokenizer, eval_dataset=test_dataset, eval_when_training=True)
+        # print(results)
+        inv_map(preds, dic, out_path)
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,92 @@
+{
+	"B-Term": {
+		"precision": 0.7734627831715211,
+		"recall": 0.6867816091954023,
+		"f1-score": 0.7275494672754947,
+		"support": 348
+	},
+	"I-Term": {
+		"precision": 0.7167919799498746,
+		"recall": 0.5872689938398358,
+		"f1-score": 0.6455981941309256,
+		"support": 487
+	},
+	"B-Definition": {
+		"precision": 0.6309148264984227,
+		"recall": 0.6410256410256411,
+		"f1-score": 0.6359300476947536,
+		"support": 312
+	},
+	"I-Definition": {
+		"precision": 0.7307782741594169,
+		"recall": 0.7428298279158699,
+		"f1-score": 0.7367547706530757,
+		"support": 4184
+	},
+	"B-Alias-Term": {
+		"precision": 0.75,
+		"recall": 0.525,
+		"f1-score": 0.6176470588235295,
+		"support": 40
+	},
+	"I-Alias-Term": {
+		"precision": 0.4782608695652174,
+		"recall": 0.34375,
+		"f1-score": 0.4,
+		"support": 32
+	},
+	"B-Referential-Definition": {
+		"precision": 0.631578947368421,
+		"recall": 0.75,
+		"f1-score": 0.6857142857142857,
+		"support": 16
+	},
+	"I-Referential-Definition": {
+		"precision": 0.6086956521739131,
+		"recall": 0.9545454545454546,
+		"f1-score": 0.7433628318584071,
+		"support": 44
+	},
+	"B-Referential-Term": {
+		"precision": 0.2222222222222222,
+		"recall": 0.4,
+		"f1-score": 0.2857142857142857,
+		"support": 5
+	},
+	"I-Referential-Term": {
+		"precision": 0.09090909090909091,
+		"recall": 0.1111111111111111,
+		"f1-score": 0.09999999999999999,
+		"support": 9
+	},
+	"B-Qualifier": {
+		"precision": 0.0,
+		"recall": 0.0,
+		"f1-score": 0.0,
+		"support": 1
+	},
+	"I-Qualifier": {
+		"precision": 0.25,
+		"recall": 0.3333333333333333,
+		"f1-score": 0.28571428571428575,
+		"support": 3
+	},
+	"micro avg": {
+		"precision": 0.7208746784270489,
+		"recall": 0.7157453019521985,
+		"f1-score": 0.7183008331044585,
+		"support": 5481
+	},
+	"macro avg": {
+		"precision": 0.49030122050150826,
+		"recall": 0.5063038309138873,
+		"f1-score": 0.48866543563158693,
+		"support": 5481
+	},
+	"weighted avg": {
+		"precision": 0.7220463383212395,
+		"recall": 0.7157453019521985,
+		"f1-score": 0.7175618792663233,
+		"support": 5481
+	}
+}

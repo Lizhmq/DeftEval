@@ -1,7 +1,7 @@
 export CUDA_VISIBLE_DEVICES=3
 DATADIR=../../deft_corpus/data/deft_files
-OUTDIR=./save-1
-MODELDIR=./save-1/checkpoint-2000-9.4999
+OUTDIR=./save-aug1
+MODELDIR=./save-aug1/checkpoint-500-0.4666
 PER_GPU_BATCH_EVAL=8
 BLOCKSIZE=512
 

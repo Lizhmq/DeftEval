@@ -1,3 +1,33 @@
+MNB
+              precision    recall  f1-score   support
+
+           0       0.71      0.96      0.82       579
+           1       0.71      0.19      0.30       279
+
+    accuracy                           0.71       858
+   macro avg       0.71      0.58      0.56       858
+weighted avg       0.71      0.71      0.65       858
+
+KNN
+              precision    recall  f1-score   support
+
+           0       0.68      1.00      0.81       579
+           1       0.71      0.02      0.03       279
+
+    accuracy                           0.68       858
+   macro avg       0.70      0.51      0.42       858
+weighted avg       0.69      0.68      0.56       858
+
+CART
+              precision    recall  f1-score   support
+
+           0       0.77      0.83      0.80       579
+           1       0.57      0.47      0.52       279
+
+    accuracy                           0.71       858
+   macro avg       0.67      0.65      0.66       858
+weighted avg       0.70      0.71      0.71       858
+
 LR
               precision    recall  f1-score   support
 
@@ -7,7 +37,6 @@ LR
     accuracy                           0.73       858
    macro avg       0.71      0.62      0.63       858
 weighted avg       0.72      0.73      0.70       858
-
 
 SVM
               precision    recall  f1-score   support
@@ -20,38 +49,6 @@ SVM
 weighted avg       0.77      0.77      0.74       858
 
 
-CART
-              precision    recall  f1-score   support
-
-           0       0.77      0.83      0.80       579
-           1       0.57      0.47      0.52       279
-
-    accuracy                           0.71       858
-   macro avg       0.67      0.65      0.66       858
-weighted avg       0.70      0.71      0.71       858
-
-
-MNB
-              precision    recall  f1-score   support
-
-           0       0.71      0.96      0.82       579
-           1       0.71      0.19      0.30       279
-
-    accuracy                           0.71       858
-   macro avg       0.71      0.58      0.56       858
-weighted avg       0.71      0.71      0.65       858
-
-
-KNN
-              precision    recall  f1-score   support
-
-           0       0.68      1.00      0.81       579
-           1       0.71      0.02      0.03       279
-
-    accuracy                           0.68       858
-   macro avg       0.70      0.51      0.42       858
-weighted avg       0.69      0.68      0.56       858
-
 
 LSTM
               precision    recall  f1-score   support
@@ -62,7 +59,6 @@ LSTM
     accuracy                           0.81       858
    macro avg       0.78      0.77      0.78       858
 weighted avg       0.80      0.81      0.80       858
-
 
 BERT
               precision    recall  f1-score   support
