@@ -28,14 +28,14 @@ def read_file(filename):
             #     print(line, len(line))
             # assert(len(line) == 8)
             if len(line) == 8:
-                tok, bio = line[0], line[4][1:]     # remove additional space
+                tok, file, bio = line[0], line[1][1:], line[4][1:]     # remove additional space
                 tag, sistag, target = line[5][1:], line[6][1:], line[7][1:]
                 if sentence != "":
                     sentence += " "
                 sentence += tok
                 bio_lst.append(bio)
-                tag_lst.append(tag)
-                sistag_lst.append(sistag)
+                tag_lst.append(file.split("/")[-1] + tag)
+                sistag_lst.append(file.split("/")[-1] + sistag)
                 target_lst.append(target)
                 if bio[2:] == "Definition":
                     hasdef = 1
@@ -113,11 +113,11 @@ if __name__ == "__main__":
     test_path_2 = "../deft_corpus/data/test_files/labeled/subtask_2"
     test_path_3 = "../deft_corpus/data/test_files/labeled/subtask_3"
     
-    save_path_t = "../deft_corpus/data/deft_files/all_train.pkl"
-    save_path_d = "../deft_corpus/data/deft_files/all_dev.pkl"
-    save_path_t1 = "../deft_corpus/data/deft_files/test1.pkl"
-    save_path_t2 = "../deft_corpus/data/deft_files/test2.pkl"
-    save_path_t3 = "../deft_corpus/data/deft_files/test3.pkl"
+    save_path_t = "../deft_corpus/data/deft_files/nall_train.pkl"
+    save_path_d = "../deft_corpus/data/deft_files/nall_dev.pkl"
+    # save_path_t1 = "../deft_corpus/data/deft_files/test1.pkl"
+    save_path_t2 = "../deft_corpus/data/deft_files/ntest2.pkl"
+    save_path_t3 = "../deft_corpus/data/deft_files/ntest3.pkl"
 
     dic = read_dir(train_path)
     save_pkl(dic, save_path_t)
@@ -125,8 +125,8 @@ if __name__ == "__main__":
     dic = read_dir(dev_path)
     save_pkl(dic, save_path_d)
 
-    dic = read_1(test_path_1)
-    save_pkl(dic, save_path_t1)
+    # dic = read_1(test_path_1)
+    # save_pkl(dic, save_path_t1)
     dic = read_dir(test_path_2)
     save_pkl(dic, save_path_t2)
     dic = read_dir(test_path_3)

@@ -2,3 +2,6 @@
 */*.txt
 */save*
 */__pycache__
+*/*.pkl
+*.joblib2
+*.joblib
