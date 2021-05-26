@@ -40,3 +40,7 @@ The results are listed in [res.txt](task1/res.txt):
 | Macro F1 | 0.56   | 0.42    | 0.66     | 0.63   | 0.69    | 0.78     | 0.84     |
 
 (Note that the hyper-parameters are not searched/selected well. I just do a simple experiment. :)
+
+### Final Report
+
+Please refer to the pdf file [DeftEval - 李拙.pdf](DeftEval - 李拙.pdf). (Updated on May 26, 2021)
