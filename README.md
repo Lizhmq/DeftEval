@@ -43,4 +43,4 @@ The results are listed in [res.txt](task1/res.txt):
 
 ### Final Report
 
-Please refer to the pdf file [DeftEval - 李拙.pdf](DeftEval - 李拙.pdf). (Updated on May 26, 2021)
+Please refer to the pdf file [DeftEval - 李拙.pdf]("./DeftEval - 李拙.pdf"). (Updated on May 26, 2021)
