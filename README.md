@@ -41,6 +41,31 @@ The results are listed in [res.txt](task1/res.txt):
 
 (Note that the hyper-parameters are not searched/selected well. I just do a simple experiment. :)
 
+### Run Command
+
+Warning: dataset and trained model are not uploaded.
+
+**Prepare Data**
+
+Execute "dataset.ipynb" and you will get "pickle" dataset saved.
+
+* Task 1
+
+  ```sh
+  cd task1
+  sh train.sh # train
+  sh eval.sh  # evaluate on test set, change the pretraineddir to saved model path
+  ```
+
+* Task2
+
+  ```sh
+  cd task2
+  sh train.sh # train
+  sh eval.sh # eval, change the "model_list" and "out_list" in eval.py
+  sh run.sh # convert to standart format, execute output.py and official evaluate script 
+  ```
+
 ### Final Report
 
 Please refer to the pdf file "DeftEval - 李拙.pdf". (Updated on May 26, 2021)
