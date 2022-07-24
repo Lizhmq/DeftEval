@@ -68,4 +68,4 @@ Execute "dataset.ipynb" and you will get "pickle" dataset saved.
 
 ### Final Report
 
-Please refer to the pdf file "DeftEval - 李拙.pdf". (Updated on May 26, 2021)
+Please refer to the pdf file [DeftEval - 李拙.pdf](https://github.com/Lizhmq/DeftEval/blob/master/DeftEval%20-%20%E6%9D%8E%E6%8B%99.pdf). (Updated on May 26, 2021)
