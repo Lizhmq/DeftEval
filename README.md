@@ -4,6 +4,10 @@
 
 In this repository, we focus on the SemEval Task6 -- [DeftEval](https://competitions.codalab.org/competitions/20900): Extracting term-definition pairs in free text.
 
+### Final Report
+
+Please refer to the pdf file [DeftEval - 李拙.pdf](https://github.com/Lizhmq/DeftEval/blob/master/DeftEval%20-%20%E6%9D%8E%E6%8B%99.pdf). (Updated on May 26, 2021)
+
 ### Overview
 
 DeftEval is split into three subtasks:
@@ -65,7 +69,3 @@ Execute "dataset.ipynb" and you will get "pickle" dataset saved.
   sh eval.sh # eval, change the "model_list" and "out_list" in eval.py
   sh run.sh # convert to standart format, execute output.py and official evaluate script 
   ```
-
-### Final Report
-
-Please refer to the pdf file [DeftEval - 李拙.pdf](https://github.com/Lizhmq/DeftEval/blob/master/DeftEval%20-%20%E6%9D%8E%E6%8B%99.pdf). (Updated on May 26, 2021)
